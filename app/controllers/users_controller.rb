@@ -1,9 +1,15 @@
 class UsersController < ApplicationController
 
     def create
-        User.create(user_params)
-        redirect_to new_user_path
-      end
+        # binding.pry
+        if User.find_by(id: params[:user][:id]) == nil
+            redirect_to new_user_path
+        else
+            @user = User.create(user_params)
+            @user.authenticate(params[:user][:password])
+            session[:user_id] = @user.id
+        end
+    end
      
       private
      

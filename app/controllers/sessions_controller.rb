@@ -2,9 +2,13 @@ class SessionsController < ApplicationController
 
 
     def create
-        # @user = User.find_by(name: params[:name])
+        # binding.pry
+        @user = User.find_by(name: params[:user][:name])
+        if @user && @user.authenticate(params[:user][:password])
         
-        # session[:user_id] = User.last.id
+        session[:user_id] = @user.id
+        end
+        
     end
 
 
